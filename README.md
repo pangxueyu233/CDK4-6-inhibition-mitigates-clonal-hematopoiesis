@@ -8,7 +8,7 @@ Therapy-related myeloid neoplasms (tMN) represent a fatal consequence of exposur
 
 **1. Codes of analyzing and visualization**
 
-- **[Figure making](Figure making.md): Visualization and Analysis of Hematopoietic Cell Populations in scRNA-seq Data**
+- **[Figure making](Figuremaking.md): Visualization and Analysis of Hematopoietic Cell Populations in scRNA-seq Data**
   - This R script processes and visualizes single-cell RNA sequencing (scRNA-seq) data to investigate hematopoietic cell populations. It includes cell annotation refinement, dimensional reduction plots (openTSNE, UMAP), gene expression analysis, stemness and cell cycle profiling, and differential gene expression analysis. The script leverages various bioinformatics packages such as Seurat, monocle, tricycle, and clusterProfiler to analyze hematopoietic stem and progenitor cells (HSPCs), myeloid, and lymphoid lineages under different conditions, including chemotherapy and CDK inhibition. The figures generated illustrate cellular distributions, gene expression dynamics, and functional implications of stemness and differentiation.
 
 # **2. Raw data download**
@@ -26,27 +26,43 @@ Below is a detailed annotation of the file structure and contents:
 3 directories, 42 files
 ```
 
+Contents
+
+- Each `_RNA.tar.gz` file includes the filtered_feature_bc_matrix output and loupe file from the Cell Ranger count model.
+
 # **3. Processed Data Download**
 
 ## 3.1. CellRanger  Output
 
 - **Description**: This section includes the output files from Cell Ranger and Space Ranger, essential for the initial data processing and analysis of single-cell RNA data.
-- **Download**: These files are available for access and download from the [GEO database](https://chat.openai.com/c/link-to-download).
+- **Download**: These files are available for access and download from the [Zenodo1XXX](https://zenodo.org/records/).
 
 Below is a detailed annotation of the file structure and contents:
 
 ```shell
-plaintextCopy code[4.0K]  .
-├── [4.0K]  cellranger_output
-│   ├── [424M]  ACC10_RNA.tar.gz
-```
+tree -lh
+[4.0K]  .
+├── [219M]  All.CytoTRACE.DS.pool2.rds # Contains CytoTRACE scores for Pool2 dataset, estimating differentiation potential across cells.
+├── [2.3G]  All_filter_miQC.pool1.merge.Sv4.rds #Merged and quality-filtered single-cell RNA-seq dataset for Pool1, processed using miQC for doublet and low-quality cell removal.
+├── [2.5G]  All_filter_miQC.pool2.merge.Sv4.rds # Merged and quality-filtered single-cell RNA-seq dataset for Pool2, similar to Pool1 but a separate dataset.
+├── [ 12K]  CD45.1.and.CD45.2.cells.propo.v2.rds #Contains proportions of CD45.1 and CD45.2 cells across different experimental conditions.
+├── [1.7K]  CD45.2.cells.propo.v2.tricycleGroup.v2.rds #CD45.2 cell proportions categorized by tricycle-inferred cell cycle phases.
+├── [107K]  Fig_New_T00_obj.markers.rds #Differential expression markers identified in the T00 object, used for figure generation.
+├── [ 47K]  MPP.GO_v2.rds #Gene ontology enrichment results for multipotent progenitor (MPP) cells.
+├── [155K]  Mus_musculus_TF.txt #List of transcription factors in Mus musculus (mouse), used for regulatory analysis.
+├── [ 534]  mouse_cell_cycle_genes.rds #Predefined list of mouse cell cycle genes for cell cycle scoring in Seurat.
+├── [ 23M]  msigdb.v7.1.symbols.gmt #MSigDB v7.1 gene set collections, used for gene set enrichment analysis.
+├── [2.2G]  only_Myeolid.pool2.merge.Sv4.rds #Merged and filtered single-cell RNA-seq dataset containing only myeloid lineage cells from Pool2.
+├── [3.2K]  only_T.cells.propo.v2.rds #Proportion data for T cell subtypes across different experimental conditions.
+├── [ 80M]  only_T_cells.pool1.rds #Single-cell RNA-seq dataset containing only T cells from Pool1.
+└── [ 11M]  pool2.v1_cell_anno.DEGs.rds #Differentially expressed genes (DEGs) annotated in Pool2 dataset.
 
-- Contents
-  - Each `_RNA.tar.gz` file includes the filtered_feature_bc_matrix output and loupe file from the Cell Ranger count model.
+0 directories, 14 files
+```
 
 # **Citation**
 
-Our paper has been published in [*XXX Journal*](https://chat.openai.com/c/xxxx). For further reference and details, you can access the publication at the provided link.
+Our paper has been published in [*XXX Journal*](https://). For further reference and details, you can access the publication at the provided link.
 
 The raw data supporting the findings of this study can be downloaded from the following repositories:
 
