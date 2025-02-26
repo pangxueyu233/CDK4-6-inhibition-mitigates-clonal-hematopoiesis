@@ -70,7 +70,7 @@ require(xlsx)
 
 
 ~~~r
-pool2 <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/All_filter_miQC.pool2.merge.Sv4.rds",mc.cores=20)
+pool2 <- mcreadRDS("./All_filter_miQC.pool2.merge.Sv4.rds",mc.cores=20)
 pool2$v2_Cell_annotation <- as.character(pool2$Cell_annotation)
 pool2$v2_Cell_annotation[pool2$Cell_annotation %in% c("Mmp8+mNeu","Retnlg+mNeu")] <- "mNeu"
 pool2$v2_Cell_annotation[pool2$Cell_annotation %in% c("Camp+immNeu","Fcnb+immNeu","Fmnl2+immNeu","Hist1h3c+immNeu","Ifitm6+immNeu","Ltf+immNeu","Pclaf+immNeu","Top2a+immNeu","Ube2c+immNeu")] <- "immNeu"
@@ -100,13 +100,13 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/pool2.openTSNE
 ![image-20250226145043339](./Figure%20making.assets/image-20250226145043339.png)
 
 ~~~r
-scRNA.hematopoiesis <- readRDS(file="/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/Fig_New_T00_obj.markers.rds")
+scRNA.hematopoiesis <- readRDS(file="./Fig_New_T00_obj.markers.rds")
 filter_scRNA.hematopoiesis <- scRNA.hematopoiesis[scRNA.hematopoiesis$p_val_adj<=0.05,]
 Stemness <- filter_scRNA.hematopoiesis[filter_scRNA.hematopoiesis$cluster=="HSPC",]
 Differentiated <- filter_scRNA.hematopoiesis[filter_scRNA.hematopoiesis$cluster=="Neutro",]
 Lineage_marker <- intersect(rownames(GetAssayData(object = pool2, slot = "data")),Stemness$gene)
 Stemness1 <- Stemness[Stemness$gene %in% Lineage_marker,]
-write.csv(Stemness1,"/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/Stemness.markers.csv")
+write.csv(Stemness1,"./Stemness.markers.csv")
 speci_raw <- FetchData(object = pool2, vars = Lineage_marker,slot="data")
 pool2[["Stemness"]] <- (rowSums(speci_raw))/length(Lineage_marker)
 Sel_sig <- c("Stemness")
@@ -173,7 +173,7 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/Fig1F.openTSNE
 ![image-20250226145218152](./Figure%20making.assets/image-20250226145218152.png)
 
 ~~~R
-only_Myeolid_seurat_seurat <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/only_Myeolid.pool2.merge.Sv4.rds",mc.cores=20)
+only_Myeolid_seurat_seurat <- mcreadRDS("./only_Myeolid.pool2.merge.Sv4.rds",mc.cores=20)
 only_Myeolid_seurat_seurat$v2_Cell_annotation[only_Myeolid_seurat_seurat$Cell_annotation %in% c("Mmp8+mNeu","Retnlg+mNeu")] <- "mNeu"
 only_Myeolid_seurat_seurat$v2_Cell_annotation[only_Myeolid_seurat_seurat$Cell_annotation %in% c("Camp+immNeu","Fcnb+immNeu","Fmnl2+immNeu","Hist1h3c+immNeu","Ifitm6+immNeu","Ltf+immNeu","Pclaf+immNeu","Top2a+immNeu","Ube2c+immNeu")] <- "immNeu"
 only_Myeolid_seurat_seurat$v2_Cell_annotation[only_Myeolid_seurat_seurat$Cell_annotation %in% c("Apoe+Mono.P","S100a4+Mono.P")] <- "Mono.P"
@@ -203,14 +203,14 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/Fig1G.UMAP_pos
 
 ~~~R
 only_Myeolid_seurat_seurat$CDK4_6 <- colSums(GetAssayData(object = only_Myeolid_seurat_seurat, slot = "data")[c("Cdk4","Cdk6"),])
-scRNA.hematopoiesis <- readRDS(file="/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/Fig_New_T00_obj.markers.rds")
+scRNA.hematopoiesis <- readRDS(file="./Fig_New_T00_obj.markers.rds")
 filter_scRNA.hematopoiesis <- scRNA.hematopoiesis[scRNA.hematopoiesis$p_val_adj<=0.05,]
 Stemness <- filter_scRNA.hematopoiesis[filter_scRNA.hematopoiesis$cluster=="HSPC",]
 Differentiated <- filter_scRNA.hematopoiesis[filter_scRNA.hematopoiesis$cluster=="Neutro",]
 Lineage_marker <- intersect(rownames(GetAssayData(object = only_Myeolid_seurat_seurat, slot = "data")),Stemness$gene)
 speci_raw <- FetchData(object = only_Myeolid_seurat_seurat, vars = Lineage_marker,slot="data")
 only_Myeolid_seurat_seurat[["Stemness"]] <- (rowSums(speci_raw))/length(Lineage_marker)
-cc.genes <- readRDS("/mnt/d/xiangyu.ubuntu/workshop/database/mouse_cell_cycle_genes.rds")
+cc.genes <- readRDS("./mouse_cell_cycle_genes.rds")
 s.genes <- cc.genes$s.genes
 g2m.genes <- cc.genes$g2m.genes
 g2m.genes_list <- intersect(g2m.genes,rownames(only_Myeolid_seurat_seurat))
@@ -241,7 +241,7 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/Fig1I.box.svg"
 ![image-20250226145527611](./Figure%20making.assets/image-20250226145527611.png)
 
 ~~~R
-All.DEGs <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/pool2.v1_cell_anno.DEGs.rds",mc.cores=20)
+All.DEGs <- mcreadRDS("./pool2.v1_cell_anno.DEGs.rds",mc.cores=20)
 unique(All.DEGs$CT)
 table(All.DEGs$cluster)
 CDK_KO <- subset(All.DEGs,cluster=="TP53_trila")
@@ -287,7 +287,7 @@ gcSampl[[i]] <- entrez
 names(gcSampl)[i] <- names(top_marker)[i]
 print(paste(names(top_marker)[i],"is done",sep = " "))
 }
-HLH_T1_OFF_HIGH_GO <- mcreadRDS(file="/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/MPP.GO_v2.rds",mc.cores=20)
+HLH_T1_OFF_HIGH_GO <- mcreadRDS(file="./MPP.GO_v2.rds",mc.cores=20)
 df <- as.data.frame(HLH_T1_OFF_HIGH_GO)
 UP.df <- subset(df,Cluster=="MPP.CDK_KO.UP")
 Myeolid <- UP.df[grep("mye",UP.df$Description,value=FALSE),]
@@ -434,7 +434,7 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/S1E.UMAP_pos.p
 ![image-20250226150123518](./Figure%20making.assets/image-20250226150123518.png)
 
 ~~~R
-aa_all_merge <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/CD45.2.cells.propo.v2.tricycleGroup.v2.rds", mc.cores = 20)
+aa_all_merge <- mcreadRDS("./CD45.2.cells.propo.v2.tricycleGroup.v2.rds", mc.cores = 20)
 cell_sub <-c("G01","S","G2M","M")
 comb <- list(c("veh","carbo"),c("veh","trila"),c("veh","comb"),c("carbo","comb"))
 All_plot_merge <- lapply(1:length(cell_sub),function(x) {
@@ -509,7 +509,7 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/S1I.openTSNE_p
 ![image-20250226150400362](./Figure%20making.assets/image-20250226150400362-1740600240827-1.png)
 
 ~~~R
-All.DEGs <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/pool2.v1_cell_anno.DEGs.rds",mc.cores=20)
+All.DEGs <- mcreadRDS("./pool2.v1_cell_anno.DEGs.rds",mc.cores=20)
 unique(All.DEGs$CT)
 table(All.DEGs$cluster)
 CDK_KO <- subset(All.DEGs,cluster=="TP53_trila")
@@ -529,7 +529,7 @@ Comb_KO.both.dn <- Comb_KO[Comb_KO$gene %in% intersect(subset(CDK_KO,group=="DN"
 CDK_KO <- rbind(CDK_KO.both.up,CDK_KO.both.dn)
 CDK_KO.MPP <- subset(CDK_KO,CT=="MPP")
 
-only_Myeolid_seurat_seurat <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/only_Myeolid.pool2.merge.Sv4.rds",mc.cores=20)
+only_Myeolid_seurat_seurat <- mcreadRDS("./only_Myeolid.pool2.merge.Sv4.rds",mc.cores=20)
 only_Myeolid_seurat_seurat$v2_Cell_annotation[only_Myeolid_seurat_seurat$Cell_annotation %in% c("Mmp8+mNeu","Retnlg+mNeu")] <- "mNeu"
 only_Myeolid_seurat_seurat$v2_Cell_annotation[only_Myeolid_seurat_seurat$Cell_annotation %in% c("Camp+immNeu","Fcnb+immNeu","Fmnl2+immNeu","Hist1h3c+immNeu","Ifitm6+immNeu","Ltf+immNeu","Pclaf+immNeu","Top2a+immNeu","Ube2c+immNeu")] <- "immNeu"
 only_Myeolid_seurat_seurat$v2_Cell_annotation[only_Myeolid_seurat_seurat$Cell_annotation %in% c("Apoe+Mono.P","S100a4+Mono.P")] <- "Mono.P"
@@ -537,8 +537,8 @@ only_Myeolid_seurat_seurat$v2_Cell_annotation[only_Myeolid_seurat_seurat$Cell_an
 only_Myeolid_seurat_seurat$v2_Cell_annotation[only_Myeolid_seurat_seurat$Cell_annotation %in% c("Stfa3+PMNa","Ifitm1+PMNa","Isg15+PMNb")] <- "PMN"
 only_Myeolid_seurat_seurat$v2_Cell_annotation <- factor(only_Myeolid_seurat_seurat$v2_Cell_annotation,levels=c("MPP","GMP","immNeu","mNeu","PMN","Mono.P"))
 
-mouse_TF <- read.table("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/Mus_musculus_TF.txt",sep="\t",header=TRUE)
-ALL_GSEA_GMT <- read.gmt("/mnt/d/xiangyu.ubuntu/workshop/database/msigdb.v7.1.symbols.gmt")
+mouse_TF <- read.table("./Mus_musculus_TF.txt",sep="\t",header=TRUE)
+ALL_GSEA_GMT <- read.gmt("./msigdb.v7.1.symbols.gmt")
 ALL_GSEA_GMT1 = ALL_GSEA_GMT %>% mutate(mouse_gene = convert_human_to_mouse_symbols(gene))
 ALL_GSEA_GMT2 <- ALL_GSEA_GMT1[,c("term","mouse_gene")]
 colnames(ALL_GSEA_GMT2) <- c("ont","gene")
@@ -575,13 +575,13 @@ dev.off()
 ![image-20250226150524785](./Figure%20making.assets/image-20250226150524785.png)
 
 ~~~R
-only_Myeolid_seurat_seurat <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/only_Myeolid.pool2.merge.Sv4.rds",mc.cores=20)
+only_Myeolid_seurat_seurat <- mcreadRDS("./only_Myeolid.pool2.merge.Sv4.rds",mc.cores=20)
 library(CytoTRACE)
-results <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/All.CytoTRACE.DS.pool2.rds",mc.cores=20)
+results <- mcreadRDS("./All.CytoTRACE.DS.pool2.rds",mc.cores=20)
 only_Myeolid_seurat_seurat.DS <- subset(only_Myeolid_seurat_seurat,cells=intersect(colnames(only_Myeolid_seurat_seurat),names(results$CytoTRACE)))
 only_Myeolid_seurat_seurat.DS$CytoTRACE <- results$CytoTRACE[rownames(only_Myeolid_seurat_seurat.DS[[]])]
 only_Myeolid_seurat_seurat.DS$CytoTRACErank <- results$CytoTRACErank[rownames(only_Myeolid_seurat_seurat.DS[[]])]
-ALL_GSEA_GMT <- read.gmt("/mnt/d/xiangyu.ubuntu/workshop/database/msigdb.v7.1.symbols.gmt")
+ALL_GSEA_GMT <- read.gmt("./msigdb.v7.1.symbols.gmt")
 ALL_GSEA_GMT1 = ALL_GSEA_GMT %>% mutate(mouse_gene = convert_human_to_mouse_symbols(gene))
 ALL_GSEA_GMT2 <- ALL_GSEA_GMT1[,c("term","mouse_gene")]
 colnames(ALL_GSEA_GMT2) <- c("ont","gene")
@@ -609,7 +609,7 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/Fig1E.svg", pl
 ![image-20250226150701250](./Figure%20making.assets/image-20250226150701250.png)
 
 ~~~R
-pool1 <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/All_filter_miQC.pool1.merge.Sv4.rds",mc.cores=20)
+pool1 <- mcreadRDS("./All_filter_miQC.pool1.merge.Sv4.rds",mc.cores=20)
 pool1$v2_Cell_annotation <- as.character(pool1$Cell_annotation)
 pool1$v2_Cell_annotation[pool1$Cell_annotation %in% c("Retnlg+mNeu","Il1b+mNeu")] <- "mNeu"
 pool1$v2_Cell_annotation[pool1$Cell_annotation %in% c("Camp+immNeu","Fcnb+immNeu","Fmnl2+immNeu","Hist1h3c+immNeu","Ltf+immNeu","Ube2c+immNeu")] <- "immNeu"
@@ -632,7 +632,7 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/Fig2A.openTSNE
 ![image-20250226151033496](./Figure%20making.assets/image-20250226151033496.png)
 
 ~~~R
-CD45.1.only_T_cells <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/only_T_cells.pool1.rds", mc.cores = 20)
+CD45.1.only_T_cells <- mcreadRDS("./only_T_cells.pool1.rds", mc.cores = 20)
 CD45.1.only_T_cells$v2_Cell_annotation <- as.character(CD45.1.only_T_cells$v2_Cell_annotation)
 CD45.1.only_T_cells$v2_Cell_annotation[grep("Ifit3",CD45.1.only_T_cells$v2_Cell_annotation,value=FALSE)] <- "CD8Tm"
 CD45.1.only_T_cells$v2_Cell_annotation[grep("Gzma",CD45.1.only_T_cells$v2_Cell_annotation,value=FALSE)] <- "CD8Tem"
@@ -650,7 +650,7 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/Fig2B.onlyT.op
 ![image-20250226151201501](./Figure%20making.assets/image-20250226151201501.png)
 
 ~~~R
-aa_all_merge <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/only_T.cells.propo.v2.rds", mc.cores = 20)
+aa_all_merge <- mcreadRDS("./only_T.cells.propo.v2.rds", mc.cores = 20)
 comb <- list(c("TP53_veh","TP53_carbo"),c("TP53_veh","TP53_trila"),c("TP53_veh","TP53_combo"),c("TP53_carbo","TP53_combo"))
 aa_all_merge <- aa_all_merge[!aa_all_merge$group %in% c("Vav_vehicle","Vav_carbo","Vav_trila","Vav_combo"),]
 aa_all_merge$group <- factor(aa_all_merge$group,levels=c("TP53_veh","TP53_carbo","TP53_trila","TP53_combo"))
@@ -754,7 +754,7 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/S2A.sotplot.sv
 ![image-20250226151342430](./Figure%20making.assets/image-20250226151342430.png)
 
 ~~~R
-aa_all_merge <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/CD45.1.and.CD45.2.cells.propo.v2.rds", mc.cores = 20)
+aa_all_merge <- mcreadRDS("./CD45.1.and.CD45.2.cells.propo.v2.rds", mc.cores = 20)
 aa_all_merge1 <- aa_all_merge[aa_all_merge$Var2 %in% c("Myeloid","Lymphoid"),]
 aa_all_merge1$group <- factor(aa_all_merge1$group,levels=c("CD45.1","CD45.2"))
 aa_all_merge1$Var2 <- factor(aa_all_merge1$Var2,levels=c("Myeloid","Lymphoid"))
@@ -836,7 +836,7 @@ dev.off()
 ![image-20250226151539105](./Figure%20making.assets/image-20250226151539105.png)
 
 ~~~R
-only_Myeolid_seurat_seurat <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/only_Myeolid.pool2.merge.Sv4.rds",mc.cores=20)
+only_Myeolid_seurat_seurat <- mcreadRDS("./only_Myeolid.pool2.merge.Sv4.rds",mc.cores=20)
 col <- jdb_palette("corona")[c(2,1,3,4:7,9:length(jdb_palette("corona")))]
 cell_sub <- c("MPP","MEP","Ery","CLP","GMP","immNeu","mNeu","PMN","Mono.P","DC","NK.T","Early.B","mature.B","Plasma","ILC2p")
 col <- col[1:length(cell_sub)]
@@ -863,11 +863,11 @@ ggsave("/mnt/d/xiangyu.ubuntu/projects/OTS/Figure_making.X.Pan.v1/S2C.CDK4_6.and
 ![image-20250226152222421](./Figure%20making.assets/image-20250226152222421.png)
 
 ~~~R
-pool2 <- mcreadRDS("/mnt/d/xiangyu.ubuntu/projects/OTS/clonal_hematopoiesis/All_filter_miQC.pool2.merge.Sv4.rds",mc.cores=20)
+pool2 <- mcreadRDS("./All_filter_miQC.pool2.merge.Sv4.rds",mc.cores=20)
 Idents(pool2) <- pool2$v2_Cell_annotation
 only_MPP <- subset(pool2,idents=c("MPP"))
 library(tricycle)
-cc.genes <- readRDS("/mnt/d/xiangyu.ubuntu/workshop/database/mouse_cell_cycle_genes.rds")
+cc.genes <- readRDS("./mouse_cell_cycle_genes.rds")
 s.genes <- cc.genes$s.genes
 g2m.genes <- cc.genes$g2m.genes
 g2m.genes_list <- intersect(g2m.genes,rownames(only_MPP))
