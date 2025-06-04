@@ -13,29 +13,14 @@ Therapy-related myeloid neoplasms (tMN) represent a fatal consequence of exposur
 
 # **2. Raw data download**
 
-- **Description**: This section includes all the raw FASTQ files from our study. These files are crucial for in-depth data analysis and understanding the sequencing results from single-cell RNA.
-
-- **Download**: You can access and download these files from the [GEO database](https://chat.openai.com/c/link-to-download).
-
-Below is a detailed annotation of the file structure and contents:
-
-```shell
-[4.0K]  .
-├── [4.0K]  scRNA
-│   ├── [ 44G]  ACC10_RNA_S1_L001_R1_001.fastq.gz
-3 directories, 42 files
-```
-
-Contents
-
-- Each `_RNA.tar.gz` file includes the filtered_feature_bc_matrix output and loupe file from the Cell Ranger count model.
+- All *in vivo* mouse data used for the scRNA analysis in this manuscript is available through Gene Expression Omnibus (GSE) accession number [GSE285875](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE285875). All human data used for targeted sequencing in this manuscript is available on Sequence Read Archive (SRA) access number [PRJNA1270003](XXX).
 
 # **3. Processed Data Download**
 
 ## 3.1. CellRanger  Output
 
 - **Description**: This section includes the output files from Cell Ranger and Space Ranger, essential for the initial data processing and analysis of single-cell RNA data.
-- **Download**: These files are available for access and download from the [Zenodo1XXX](https://zenodo.org/records/).
+- **Download**: These files are available for access and download from the [Zenodo 10.5281/zenodo.15593761](https://zenodo.org/records/15593761).
 
 Below is a detailed annotation of the file structure and contents:
 
@@ -62,9 +47,9 @@ tree -lh
 
 # **Citation**
 
-Our paper has been published in [*XXX Journal*](https://). For further reference and details, you can access the publication at the provided link.
+Our paper has been published in [*Nature Medicine*](https://). For further reference and details, you can access the publication at the provided link.
 
 The raw data supporting the findings of this study can be downloaded from the following repositories:
 
-- **GEO Database**: Access our dataset by visiting [GSEXXX](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSEXXX). This link will take you directly to the dataset's page.
-- **Zenodo**: Additional data files are available on Zenodo. Download them at [Zenodo1XXX](https://zenodo.org/records/).
+- **GEO Database**: Access our dataset by visiting [GSE285875](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE285875). This link will take you directly to the dataset's page.
+- **Zenodo**: Additional data files are available on Zenodo. Download them at [Zenodo 10.5281/zenodo.15593761](https://zenodo.org/records/15593761).
